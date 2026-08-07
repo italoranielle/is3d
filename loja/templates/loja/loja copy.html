@@ -1,0 +1,83 @@
+{% extends 'base_loja.html' %}
+{% load static %}
+{% block title %}I.S 3D Post's{% endblock title %}
+
+
+
+{% block content %}
+
+                <div class="col-lg-12 col-md-6 col-sm-12 mb-30">
+                    <div class="card card-box">
+                        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+                        	<div class="carousel-inner">
+                        		<div class="carousel-item active">
+                        			<img class="d-block w-100 card-img" src="{% static 'images/banner/banner5.png' %}" alt="First slide">
+                        		</div>
+                        		<div class="carousel-item">
+                        			<img class="d-block w-100 card-img" src="{% static 'images/banner/banner2.jpg' %}" alt="Second slide">
+                        		</div>
+                        	</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row clearfix">
+					<div class="col-lg-3 col-md-12">
+						<!-- Price Start -->
+						<div class="border-bottom mb-4 pb-4">
+							<h5 class="font-weight-semi-bold mb-4">Categorias</h5>
+							<form>
+								{% for categoria in categorias %}
+								<div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+									<input type="checkbox" class="custom-control-input"  id="categoria-{{categoria.pk}}">
+									<label class="custom-control-label" for="categoria-{{categoria.pk}}">{{categoria.descricao}}</label>
+									<span class="badge border font-weight-normal">1000</span>
+								</div>
+								{% endfor %}
+							</form>
+						</div>
+						<!-- Price End -->
+					</div>
+					<div class="col-lg-9 col-md-12"> 
+						<div class="row">
+							{% for produto in produtos %}
+							<div class="col-lg-3 col-md-6 col-sm-12 mb-30">
+								
+								<div class="card card-box">
+								<a href="{{produto.get_absolute_url}}">
+									<img class="card-img-top" src="{{produto.imagem.all.0.imagem}}" alt="Card image cap">
+									<div class="card-body text-center">
+										<h5 class="card-title weight-500"> {{produto.nome}}</h5>
+										<p class="card-text"> R${{ produto.preco|floatformat:2 }} </p>
+									</div>
+									</a>
+								</div>
+								
+							</div>
+						{% endfor %}
+		
+						</div>
+						<nav aria-label="Page navigation">
+							<ul class="pagination">
+								{% if pages is not NONE %}   
+									<li class="page-item"><a class="page-link" href="{{request.get_full_path}}&page=0">0</a></li>
+									{% for p in pages %}                    
+									<li class="page-item"><a class="page-link" href="{{request.get_full_path}}&page={{ p }}"><i class="fa fa-angle-right">{{ p }}</i></a></li>
+									{% endfor %}    
+								{% endif %}
+							</ul>
+						</nav>
+					</div>
+				
+
+            	</div>
+			
+               
+		
+				
+				
+
+        
+ 
+
+{% endblock content %}

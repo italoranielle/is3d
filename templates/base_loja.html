@@ -1,0 +1,138 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Basic Page Info -->
+	<meta charset="utf-8">
+	 <title>{% block title %}{% endblock title %}</title> 
+
+	<!-- Site favicon -->
+
+	<link rel="apple-touch-icon" sizes="180x180" href="{% static 'loja/vendors/images/apple-touch-icon.png' %}">
+	<link rel="icon" type="image/png" sizes="32x32" href="{% static 'loja/vendors/images/favicon-32x32.png' %}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{% static 'loja/vendors/images/favicon-16x16.png' %}">
+
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Google Font -->
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="{% static 'loja/vendors/styles/core.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'loja/vendors/styles/icon-font.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'loja/vendors/styles/style.css' %}">
+
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-119386393-1');
+	</script>
+	 {% block extra %}{% endblock extra %}
+</head>
+<body class="sidebar-dark header-dark">
+
+
+	<div class="header">
+		<div class="header-left">
+			<div class="menu-icon dw dw-menu"></div>
+			<div class="search-toggle-icon dw dw-search2" data-toggle="header_search"></div>
+			<div class="header-search">
+				<form action="/loja" method="get" >
+					<div class="form-group mb-0">
+						<i class="dw dw-search2 search-icon"></i>
+						<input type="text" name="search" class="form-control search-input" placeholder="Search Here">
+						<div class="dropdown">
+							<a class="dropdown-toggle no-arrow" type="submit"  role="button">
+								<i class="ion-arrow-down-c"></i>
+							</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="header-right">
+
+		</div>
+	</div>
+
+	<div class="left-side-bar">
+		<div class="brand-logo">
+			<a href="#">
+				<img src="{% static 'images/logo2.png' %}" alt="" class="dark-logo">
+				<img src="{% static 'images/logo.png' %}" alt="" class="light-logo">
+			</a>
+			<div class="close-sidebar" data-toggle="left-sidebar-close">
+				<i class="ion-close-round"></i>
+			</div>
+		</div>
+		<div class="menu-block customscroll">
+			<div class="sidebar-menu">
+				<ul id="accordion-menu">
+					<li>
+						<a href="{% url 'loja' %}" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-house-1"></span><span class="mtext">Home</span>
+						</a>
+					</li>
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle">
+							<span class="micon fa fa-list"></span><span class="mtext"> Categorias</span>
+						</a>
+						<ul class="submenu">
+							{% block categorias %}
+
+                    		{% endblock categorias %}
+							
+						</ul>
+					</li>
+					{% if user.is_authenticated %}
+					<li>
+						<a href="{% url 'produtonovo' %}" class="dropdown-toggle no-arrow">
+							<span class="micon fa fa-newspaper-o"></span><span class="mtext">Cadasto de Item</span>
+							
+						</a>
+					</li>
+					{% endif %}
+
+					<li>
+						<a href="{% url 'postList' 0 %}" class="dropdown-toggle no-arrow">
+							<span class="micon fa fa-newspaper-o"></span><span class="mtext">Blog</span>
+							
+						</a>
+					</li>
+		
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="mobile-menu-overlay"></div>
+
+	<div class="main-container">
+		<div class="pd-ltr-20 xs-pd-20-10">
+			<div class="min-height-200px">
+				
+					    {% block content %}{% endblock content %}
+						
+		
+			</div>
+			<div class="footer-wrap pd-20 mb-20 card-box">
+				2021 - Desenvolvido por  <a href="#" >I.S DIY</a>
+			</div>
+		</div>
+	</div>
+	<!-- js -->
+	<script src="{% static 'loja/vendors/scripts/core.js' %}"></script>
+	<script src="{% static 'loja/vendors/scripts/script.min.js' %}"></script>
+	<script src="{% static 'loja/vendors/scripts/process.js' %}"></script>
+	<script src="{% static 'loja/vendors/scripts/layout-settings.js' %}"></script>
+	{% block scriptextra %}
+    
+    {% endblock scriptextra %}
+	
+</body>
+</html>

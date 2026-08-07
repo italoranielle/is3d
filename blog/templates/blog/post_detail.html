@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}I.S 3D Post's{% endblock title %}
+
+
+
+{% block content %}
+
+
+<div id="banner-area">
+		<img src="{% static 'images/banner/banner5.jpg' %}" alt ="" />
+		<div class="parallax-overlay"></div>
+			<!-- Subpage title start -->
+			<div class="banner-title-content">
+	        	<div class="text-center">
+		        	<h2>Blog Single</h2>
+		        	<ul class="breadcrumb">
+			            <li>Home</li>
+			            <li>Blog</li>
+			            <li><a href="{% url 'postCreate' %}"> Blog Post</a></li>
+		          	</ul>
+	          	</div>
+          	</div><!-- Subpage title end -->
+	</div><!-- Banner area end -->
+
+	<!-- Blog details page start -->
+	<section id="main-container">
+		<div class="container">
+			<div class="row">
+
+				<!-- Blog start -->
+				<div class="">
+					<!-- Blog post start -->
+					<div class="post-content">
+						<!-- post image start -->
+						<div class="post-image-wrapper">
+							<img {% if post.imagem is None %} src="{% static 'images/banner/banner2.jpg' %}" {% else %} src="{{post.imagem}}" {% endif %}  class="img-responsive"  alt="" />
+							<span class="blog-date"><a href="#"> {{post.data}}</a></span>
+						</div><!-- post image end -->
+						<div class="post-header clearfix">
+							<h2 class="post-title">
+								<a href="#">{{ object.titulo }}</a>
+							</h2>
+							<div class="post-meta">
+								<span class="post-meta-author">Postado por: <a href="#"> {{post.autor}}</a></span>
+								<span class="post-meta-cats">em <a href="#"> {{post.categoria.Nome}}</a></span>
+								<div class="pull-right">
+									<span class="post-meta-comments"><a href="#"><i class="fa fa-comment-o"></i> </a></span>
+									<span class="post-meta-hits"><a href="#"><i class="fa fa-heart-o"></i> </a></span>
+    								<span class="post-meta-hits"><a href="{% url 'postEdit' object.pk  %}"><i class="fa fa-pencil"></i>Editar </a></span>
+								</div>
+								
+							</div><!-- post meta end -->
+						</div><!-- post heading end -->
+						<div class="entry-content">
+							{{ object.postagem|safe }}
+						</div>
+						<!-- Author info start 
+						
+						
+						<div class="about-author">
+							<div class="author-img pull-left">
+								<img src="images/blog/author.jpg" alt="" />
+							</div>
+							<div class="author-info">
+								<h3>Josefine Kristy <span>Web Developer</span></h3>
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vestibulum eget justo sit amet varius.</p>
+								<p class="author-url">Website: <span><a href="#">http://www.spikeincor.eu</a></span></p>
+
+							</div>
+						</div>
+						 Author info end -->
+
+
+    		 </div><!--/ row end -->
+		</div><!--/ container end -->
+	</section><!-- Blog details page end -->
+
+
+
+{% endblock content %}

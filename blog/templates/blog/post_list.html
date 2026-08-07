@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}I.S 3D Post's{% endblock title %}
+
+
+
+{% block content %}
+
+	<div id="banner-area">
+		<img src="{% static 'images/banner/banner5.png' %}" alt ="" />
+		<div class="parallax-overlay"></div>
+			<!-- Subpage title start -->
+			<div class="banner-title-content">
+	        	<div class="text-center">
+		        	<h2>Blog I.S DIY</h2>
+		        	<ul class="breadcrumb">
+			            <li>Home</li>
+			            <li><a href="{% url 'postCreate' %}"> Blog </a></li>
+		          	</ul>
+	          	</div>
+          	</div><!-- Subpage title end -->
+	</div><!-- Banner area end -->
+	
+	<!-- Blog details page start -->
+	<section id="main-container">
+		<div class="container">
+			<div class="row">
+
+				<!-- Blog start -->
+				<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+				
+				    {% for post in object_list %}
+   
+					<!-- 1st post start -->
+					<div class="post">
+						<!-- post image start -->
+						<div class="post-image-wrapper">
+							<img {% if post.imagem is None %} src="{% static 'images/banner/banner2.jpg' %}" {% else %} src="{{post.imagem}}" {% endif %}  class="img-responsive"  alt="" />
+							<span class="blog-date"><a href="#"> {{post.data}}</a></span>
+						</div><!-- post image end -->
+						<div class="post-header clearfix">
+							<h2 class="post-title">
+								<a href="{{ post.get_absolute_url }}">{{post.titulo}}</a>
+							</h2>
+							<div class="post-meta">
+								<span class="post-meta-author">Postado por <a href="#"> {{post.autor}}</a></span>
+    							<span class="post-meta-cats">em <a href="/blog/posts/search/?cate={{post.categoria.Nome}}">{{post.categoria.Nome}}</a> </span>
+								<div class="pull-right">
+									
+
+								</div>
+								
+							</div><!-- post meta end -->
+						</div><!-- post heading end -->
+						<div class="post-body">
+							<p>{{post.postagem|striptags|safe|truncatechars:"250"}}</p>
+						</div>
+						<div class="post-footer">
+							<a href="{{ post.get_absolute_url}}" class="btn btn-primary">Continar lendo <i class="fa fa-angle-double-right">&nbsp;</i></a>
+						</div>
+					</div><!-- 1st post end -->
+                 {% endfor %}
+                 
+                 <div class="paging">
+			            <ul class="pagination">
+			              <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+			             
+			              {% for page in pages %}
+			              <li class="active"><a href="#"> {{ page }} </a></li>
+			              {% endfor %}
+			              <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+			            </ul>
+		          	</div>
+
+
+				</div><!--/ Content col end -->
+				
+				<!-- sidebar start -->
+				<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+					
+					<div class="sidebar sidebar-right">
+						<div class="widget">
+						 {% if user.is_authenticated %}
+        					<a href="{% url 'postCreate' %}" class="btn btn-primary">Nova Postagem <i class="fa fa-plus">&nbsp;</i></a>
+        				 {% endif %}
+        				</div>
+
+						<!-- Blog search start -->
+						<div class="widget widget-search">
+							<h3 class="widget-title">Search</h3>
+							<div id="search">
+    							<form action="{% url 'postSearchList' %}">
+    								<input name="q" class="form-control form-control-lg" placeholder="search" type="search">
+    							</form>
+							</div>
+						</div><!-- Blog search end -->
+
+						<!-- Tab widget start-->
+						<div class="widget widget-tab">
+							<ul class="nav nav-tabs">
+				              <!--<li class=""><a href="#popular-tab" data-toggle="tab">popular</a></li-->
+				              <li class="active"><a href="#recent-tab" data-toggle="tab">recent</a></li>
+				             <!-- <li class=""><a href="#comments-tab" data-toggle="tab">comments</a></li> -->
+				            </ul>
+				            <div class="tab-content">
+				            	<div class="tab-pane" id="popular-tab">
+					                <ul class="posts-list unstyled clearfix">
+					                  <li>
+					                    <div class="posts-thumb pull-left"> 
+					                    	<a href="#"> 
+					                    		<img alt="img" src="images/blog/blog1.jpg">
+					                    	</a> 
+					                    </div>
+					                    <div class="post-content">
+					                        <h4 class="entry-title"><a href="#">aria claims to find Europe's 'oldest town'</a>
+					                        </h4>
+					                        <p class="post-meta">
+												<span class="post-meta-author">Posted by <a href="#"> Admin</a></span>
+												<span class="post-meta-date"><a href="#"> <i class="fa fa-clock-o"></i> November 14</a>
+												</span>
+											</p>
+					                    </div>
+					                    <div class="clearfix"></div>
+					                  </li><!-- First post end-->
+					                </ul>
+					            </div><!-- Popular tabpan end -->
+
+					            <div class="tab-pane active" id="recent-tab">
+					                <ul class="posts-list unstyled clearfix">
+									 {% for post in recente %}
+					                  <li>
+					                    <div class="posts-avator pull-left"> 
+					                    	<a href="{{ post.get_absolute_url}}"> 
+					                    		<img {% if post.imagem is None %} src="{% static 'images/banner/banner2.jpg' %}" {% else %} src="{{post.imagem}}" {% endif %} >
+					                    	</a> 
+					                    </div>
+					                    <div class="post-content">
+					                        <h4 class="entry-title"><a href="{{ post.get_absolute_url}}">{{post.titulo}}</a>
+					                        </h4>
+					                        <p class="post-meta">
+												<span class="post-meta-author">Postado por <a href="#"> {{post.autor}}</a></span>
+												<span class="post-meta-date"><a href="#"> <i class="fa fa-clock-o"></i> {{post.data}}</a>
+												</span>
+											</p>
+					                    </div>
+					                    <div class="clearfix"></div>
+					                  </li><!-- First post end-->
+					                {% endfor %}
+					                </ul>
+					            </div><!-- Recent tabpan end -->
+
+					            <div class="tab-pane" id="comments-tab">
+					                <ul class="posts-list unstyled clearfix">
+					                {% for post in recente %}
+					                  <li>
+					                    <div class="posts-avator pull-left"> 
+					                    	<a href="#"> 
+					                    		<img {% if post.imagem is None %} src="{% static 'images/banner/banner2.jpg' %}" {% else %} src="{{post.imagem}}" {% endif %} >
+					                    	</a> 
+					                    </div>
+					                    <div class="post-content">
+					                        <h4 class="entry-title"><a href="#">{{post.titulo}}</a>
+					                        </h4>
+					                        <p class="post-meta">
+												<span class="post-meta-author">Postado por <a href="#"> {{post.autor}}</a></span>
+												<span class="post-meta-date"><a href="#"> <i class="fa fa-clock-o"></i> {{post.data}}</a>
+												</span>
+											</p>
+					                    </div>
+					                    <div class="clearfix"></div>
+					                  </li><!-- First post end-->
+					                {% endfor %}
+					                </ul>
+					            </div><!-- Comment tabpan end -->
+				            </div><!-- Tab content end -->
+						</div><!-- Tab widget end-->
+
+						<!-- Blog category start -->
+						<div class="widget widget-categories">
+							<h3 class="widget-title">Blog Categorias</h3>
+							<ul class="category-list clearfix">
+							{% for categoria in categorias %}
+				              <li><a href="/blog/posts/search/?cate={{categoria.Nome}}">{{categoria.Nome}}</a><span class="posts-count"> </span></li>
+                            {% endfor %}
+				            </ul>
+						</div>
+						
+						<!--
+        
+						<div class="widget widget-tags">
+							<h3 class="widget-title">Popular Tags</h3>
+							<ul class="unstyled clearfix">
+				              	<li><a href="#">iMac</a></li>
+				              	<li><a href="#">Black and Green</a></li>
+				              	<li><a href="#">Crative</a></li>
+				              	<li><a href="#">Momentum</a></li>
+				              	<li><a href="#">Business</a></li>
+				              	<li><a href="#">Cellular</a></li>
+				              	<li><a href="#">Niche</a></li>
+				            </ul>
+						</div>
+
+					
+						<div class="widget">
+							<h3 class="widget-title">Text Widgets</h3>
+							<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normalopposed.</p>
+						</div>
+						-->
+
+					</div>
+				</div>
+    		</div><!--/ row end -->
+		</div><!--/ container end -->
+	</section><!-- Blog details page end -->
+
+
+
+{% endblock content %}

@@ -1,0 +1,94 @@
+{% extends 'base_loja.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}
+Novo produto
+{% endblock title %}
+
+
+{% block content %}
+<section class="ftco-section services-section">
+  <div class="container ">
+    <form method="post" enctype="multipart/form-data" >
+      {% csrf_token %}
+      {% for hidden_field in form.hidden_fields %}
+        {{ hidden_field }}
+      {% endfor %}
+      {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+          {% for error in form.non_field_errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% for field in form.visible_fields %}
+        <div class="form-group">
+          {{ field.label_tag }}
+          {% if field.field.required %}
+          <span class="text-danger">*</span>
+          {% endif %}
+          {% if form.is_bound %}
+            {% if field.errors %}
+              {% render_field field class="form-control is-invalid" %}
+              {% for error in field.errors %}
+                <div class="invalid-feedback">
+                  {{ error }}
+                </div>
+              {% endfor %}
+            {% else %}
+              {% render_field field class="form-control is-valid" %}
+            {% endif %}
+          {% else %}
+            {% render_field field class="form-control" %}
+          {% endif %}
+          {% if field.help_text %}
+            <small class="form-text text-muted">{{ field.help_text }}</small>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+    <datalist id="locais">
+    </datalist>
+
+      <div class=" m-4">
+          <button type="submit" class="btn btn-primary btn-block">Salvar</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+{% endblock content %}
+
+{% block scriptextra %}
+
+<script>
+
+$('#id_desconto').on('change', function() {
+    var desconto = $(this).val();
+ 
+});
+$('#id_quantidade_material').on('change', function() {
+    var tempo = $('#id_tempo').val();
+    var quantidade_material = $(this).val();
+    const [horas, minutos] = tempo.split(':').map(Number);
+    const segundos = (horas * 3600) + (minutos * 60); 
+
+    $('#id_valor').val((segundos*0.01) + quantidade_material*1.17 )
+   
+});
+$('#id_tempo').on('change', function() {
+    var tempo = $(this).val();
+    var quantidade_material = $('#id_quantidade_material').val();
+    const [horas, minutos] = tempo.split(':').map(Number);
+    const segundos = (horas * 3600) + (minutos * 60); 
+
+    $('#id_valor').val((segundos*0.01) + quantidade_material*1.17 )
+});
+
+
+
+
+</script>
+{% endblock scriptextra %}

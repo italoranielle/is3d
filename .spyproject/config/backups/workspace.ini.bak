@@ -1,0 +1,10 @@
+[workspace]
+restore_data_on_startup = True
+save_data_on_exit = True
+save_history = True
+save_non_project_files = False
+
+[main]
+version = 0.2.0
+recent_files = ['templates\\registration\\login.html', 'loja\\views.py', 'loja\\urls.py', 'loja\\models.py', 'loja\\templates\\loja\\loja.html', 'blog\\views.py', 'loja\\templates\\loja\\produto.html', 'templates\\base.html', 'templates\\base_loja.html', 'is3d\\settings.py', 'loja\\admin.py']
+
